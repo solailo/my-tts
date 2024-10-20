@@ -46,14 +46,15 @@ exports.handler = async (event, context) => {
     const base64Audio = Buffer.from(audioBuffer).toString('base64');
     const mimeType = `audio/${response_format || 'mp3'}`;
 
-    return {
-      statusCode: 200,
-      headers: {
-        'Content-Type': mimeType,
-      },
-      body: base64Audio,
-      isBase64Encoded: true,
-    };
+ return {
+  statusCode: 200,
+  headers: {
+    'Content-Type': mimeType,
+    'Access-Control-Allow-Origin': 'https://voice00.netlify.app', // あなたのドメインに変更
+  },
+  body: base64Audio,
+  isBase64Encoded: true,
+};
   } catch (error) {
     return {
       statusCode: 500,
