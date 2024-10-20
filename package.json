@@ -1,0 +1,10 @@
+{
+  "name": "my-tts-app",
+  "version": "1.0.0",
+  "description": "Text-to-Speech Application using OpenAI API",
+  "main": "index.js",
+  "scripts": {},
+  "dependencies": {
+    "node-fetch": "^2.6.1"
+  }
+}
