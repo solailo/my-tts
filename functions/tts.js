@@ -4,7 +4,27 @@ const fetch = require('node-fetch');
 
 exports.handler = async (event, context) => {
   if (event.httpMethod !== 'POST') {
-    return { statusCode: 405, body: 'Method Not Allowed' };
+    return {
+      statusCode: 405,
+      headers: {
+        'Access-Control-Allow-Origin': '*', // 必要に応じて特定のドメインに変更
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type'
+      },
+      body: 'Method Not Allowed'
+    };
+  }
+
+  if (event.httpMethod === 'OPTIONS') {
+    return {
+      statusCode: 200,
+      headers: {
+        'Access-Control-Allow-Origin': '*', // 必要に応じて特定のドメインに変更
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type'
+      },
+      body: ''
+    };
   }
 
   try {
@@ -13,6 +33,9 @@ exports.handler = async (event, context) => {
     if (!input || !voice || !model) {
       return {
         statusCode: 400,
+        headers: {
+          'Access-Control-Allow-Origin': '*' // 必要に応じて特定のドメインに変更
+        },
         body: JSON.stringify({ error: 'Missing required parameters.' }),
       };
     }
@@ -38,6 +61,9 @@ exports.handler = async (event, context) => {
       const errorData = await response.json();
       return {
         statusCode: response.status,
+        headers: {
+          'Access-Control-Allow-Origin': '*' // 必要に応じて特定のドメインに変更
+        },
         body: JSON.stringify({ error: errorData.error.message || '音声生成に失敗しました。' }),
       };
     }
@@ -46,20 +72,22 @@ exports.handler = async (event, context) => {
     const base64Audio = Buffer.from(audioBuffer).toString('base64');
     const mimeType = `audio/${response_format || 'mp3'}`;
 
- return {
-  statusCode: 200,
-  headers: {
-    'Content-Type': mimeType,
-    'Access-Control-Allow-Origin': 'https://voice00.netlify.app', // あなたのドメインに変更
-  },
-  body: base64Audio,
-  isBase64Encoded: true,
-};
+    return {
+      statusCode: 200,
+      headers: {
+        'Content-Type': mimeType,
+        'Access-Control-Allow-Origin': '*' // 必要に応じて特定のドメインに変更
+      },
+      body: base64Audio,
+      isBase64Encoded: true,
+    };
   } catch (error) {
     return {
       statusCode: 500,
+      headers: {
+        'Access-Control-Allow-Origin': '*' // 必要に応じて特定のドメインに変更
+      },
       body: JSON.stringify({ error: error.message }),
     };
   }
 };
-
