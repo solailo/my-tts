@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>テキストから音声へ (TTS) アプリ</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>テキストから音声へ (TTS) アプリ</h1>
+    <textarea id="textInput" placeholder="ここにテキストを入力してください..."></textarea>
+    
+    <div class="dropdowns">
+      <div class="dropdown">
+        <label for="voiceSelect">Voice:</label>
+        <select id="voiceSelect">
+          <option value="alloy">Alloy</option>
+          <option value="echo">Echo</option>
+          <option value="fable">Fable</option>
+          <option value="onyx">Onyx</option>
+          <option value="nova">Nova</option>
+          <option value="shimmer">Shimmer</option>
+        </select>
+      </div>
+      
+      <div class="dropdown">
+        <label for="modelSelect">Model:</label>
+        <select id="modelSelect">
+          <option value="tts-1">TTS</option>
+          <option value="tts-1-hd">TTS HD</option>
+        </select>
+      </div>
+    </div>
+    
+    <button id="generateBtn">音声を生成</button>
+    <p id="costEstimate"></p>
+    <audio id="audioPlayer" controls></audio>
+  </div>
+  
+  <script src="script.js"></script>
+</body>
+</html>
